@@ -9,6 +9,10 @@ import {
   OneToMany,
 } from 'typeorm';
 
+import { Games } from './game.entity';
+import { Follows } from './follow.entity';
+import { Followings } from './following.entity';
+
 import * as bcrypt from 'bcrypt';
 
 @Entity()
@@ -32,7 +36,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'varchar', length: 250 })
   bio: string;
 
-  @Column({ nullable: true, type: 'varchar', length: 30 })
+  @Column({ nullable: true, type: 'varchar', length: 50 })
   birthday: string;
 
   @Column({ nullable: false, default: true })
@@ -41,6 +45,17 @@ export class User extends BaseEntity {
   @Column({ nullable: false, type: 'varchar', length: 20 })
   role: string;
 
+  // relationship entities
+  @OneToMany(() => Games, (games) => games.user)
+  games: Games[];
+
+  @OneToMany(() => Follows, (follows) => follows.user)
+  follows: Follows[];
+
+  @OneToMany(() => Followings, (followings) => followings.user)
+  followings: Followings[];
+
+  // date
   @CreateDateColumn()
   createAt: Date;
 
