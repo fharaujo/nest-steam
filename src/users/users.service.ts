@@ -1,6 +1,6 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from './users.category';
+import { UserRepository } from './users.repository';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/user.entity';
 import { UserRole } from './user-roles.enum';
@@ -9,14 +9,14 @@ import { UserRole } from './user-roles.enum';
 export class UsersService {
   constructor(
     @InjectRepository(UserRepository)
-    private users: UserRepository,
+    private userService: UserRepository,
   ) {}
 
   async createAdminUser(createUserDto: CreateUserDto): Promise<User> {
     if (createUserDto.password != createUserDto.passwordConfirmation) {
       throw new UnprocessableEntityException('As senhas não são iguais');
     } else {
-      return this.users.createUser(createUserDto, UserRole.ADMIN);
+      return this.userService.createUser(createUserDto, UserRole.ADMIN);
     }
   }
 }
