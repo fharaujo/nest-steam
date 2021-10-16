@@ -1,8 +1,8 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from './users.repository';
+import { UserRepository } from 'src/users/users.repository';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { User } from './entities/user.entity';
+import { User } from 'src/users/user.entity';
 import { UserRole } from './user-roles.enum';
 
 @Injectable()

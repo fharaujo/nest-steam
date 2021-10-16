@@ -9,14 +9,12 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import { Games } from './game.entity';
-import { Follows } from './follow.entity';
-import { Followings } from './following.entity';
-
-import * as bcrypt from 'bcrypt';
+/*import { Games } from '../entities/game.entity';
+import { Follows } from '../entities/follow.entity';
+import { Followings } from '../entities/following.entity';*/
 
 @Entity()
-@Unique(['email', 'username'])
+@Unique(['email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -52,14 +50,14 @@ export class User extends BaseEntity {
   role: string;
 
   // relationship entities
-  @OneToMany(() => Games, (games) => games.user)
+  /*@OneToMany(() => Games, (games) => games.user)
   games: Games[];
 
   @OneToMany(() => Follows, (follows) => follows.user)
   follows: Follows[];
 
   @OneToMany(() => Followings, (followings) => followings.user)
-  followings: Followings[];
+  followings: Followings[];*/
 
   // date
   @CreateDateColumn()
