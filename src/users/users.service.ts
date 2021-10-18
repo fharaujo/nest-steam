@@ -19,4 +19,12 @@ export class UsersService {
       return this.userService.createUser(createUserDto, UserRole.ADMIN);
     }
   }
+
+  async getAllUser(): Promise<User[]> {
+    return await this.userService.find();
+  }
+
+  async getUserByUsername(username: string): Promise<User> {
+    return await this.userService.findOne({ where: { username } });
+  }
 }

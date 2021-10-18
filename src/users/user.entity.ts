@@ -9,9 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-/*import { Games } from '../entities/game.entity';
-import { Follows } from '../entities/follow.entity';
-import { Followings } from '../entities/following.entity';*/
+import { Game } from '../games/game.entity';
 
 @Entity()
 @Unique(['email'])
@@ -28,13 +26,13 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'varchar', length: 250 })
   image: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, select: false })
   password: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, select: false })
   salt: string;
 
-  @Column({ nullable: true, type: 'varchar', length: 64 })
+  @Column({ nullable: true, type: 'varchar', length: 64, select: false })
   confirmationToken: string;
 
   @Column({ nullable: true, type: 'varchar', length: 250 })
@@ -50,14 +48,14 @@ export class User extends BaseEntity {
   role: string;
 
   // relationship entities
-  /*@OneToMany(() => Games, (games) => games.user)
-  games: Games[];
+  @OneToMany(() => Game, (game) => game.user)
+  games: Game[];
 
-  @OneToMany(() => Follows, (follows) => follows.user)
-  follows: Follows[];
+  @Column({ name: 'follow_count', default: 0 })
+  followCount: number;
 
-  @OneToMany(() => Followings, (followings) => followings.user)
-  followings: Followings[];*/
+  @Column({ name: 'following_count', default: 0 })
+  followingCount: number;
 
   // date
   @CreateDateColumn()
