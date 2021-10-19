@@ -9,7 +9,7 @@ import { Game } from './game.entity';
 @EntityRepository(Game)
 export class GameRepository extends Repository<Game> {
   async createGame(createGameDto: CreateGameDto): Promise<Game> {
-    const { name, image, bio, release_date } = createGameDto;
+    const { name, image, bio, release_date, likes, categories } = createGameDto;
 
     const game = this.create();
 
@@ -17,16 +17,18 @@ export class GameRepository extends Repository<Game> {
     game.image = image;
     game.bio = bio;
     game.release_date = release_date;
+    game.likes = likes;
+    game.categories = categories;
 
     try {
       await game.save();
       return game;
     } catch (error) {
       if (error.code.toString() === '23505') {
-        throw new ConflictException('Categoria já existe');
+        throw new ConflictException('Jogo já existe');
       } else {
         throw new InternalServerErrorException(
-          'Erro ao salvar a categoria no banco.',
+          'Erro ao salvar o jogo no banco.',
         );
       }
     }

@@ -4,11 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { User } from '../users/user.entity';
-import { Category } from './game-category.entity';
 
 @Entity()
 export class Game extends BaseEntity {
@@ -31,8 +30,8 @@ export class Game extends BaseEntity {
   likes: number;
 
   // relationship entities
-  @OneToMany(() => Category, (category) => category.games)
-  categories: Category[];
+  @Column({ nullable: true, type: 'json' })
+  categories: string[];
 
   @ManyToOne(() => User, (user) => user.games, { eager: true })
   user: User;

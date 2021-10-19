@@ -26,7 +26,4 @@ export class CreateUserDto {
     message: 'A Confirmação de senha deve deve ser igual a senha.',
   })
   passwordConfirmation: string;
-
-  @IsOptional()
-  games: string[];
 }

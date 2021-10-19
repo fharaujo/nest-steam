@@ -8,6 +8,7 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { UserCredentialsDto } from 'src/games/dtos/user-credentials.dto';
 // fazer a relação entre o repository e a entidade user
 
 @EntityRepository(User)
@@ -44,6 +45,19 @@ export class UserRepository extends Repository<User> {
           'Erro ao salvar o usuário no banco.',
         );
       }
+    }
+  }
+
+  async checkCredentialsUser(
+    credentialsDto: UserCredentialsDto,
+  ): Promise<User> {
+    const { email, password } = credentialsDto;
+    const user = await this.findOne({ email, status: true });
+
+    if (user && (await user.checkPasswordUser(password))) {
+      return user;
+    } else {
+      return null;
     }
   }
 

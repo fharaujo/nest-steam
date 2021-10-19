@@ -7,10 +7,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 import { Game } from '../games/game.entity';
-
+import * as bcrypt from 'bcrypt';
 @Entity()
 @Unique(['email'])
 export class User extends BaseEntity {
@@ -49,6 +50,7 @@ export class User extends BaseEntity {
 
   // relationship entities
   @OneToMany(() => Game, (game) => game.user)
+  @JoinColumn()
   games: Game[];
 
   @Column({ name: 'follow_count', default: 0 })
@@ -63,6 +65,11 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updateAt: Date;
+
+  async checkPasswordUser(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
+  }
 }
 
 /*
