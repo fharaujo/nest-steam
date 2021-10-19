@@ -8,7 +8,7 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { UserCredentialsDto } from 'src/games/dtos/user-credentials.dto';
+import { UserCredentialsDto } from 'src/auth/dtos/user-credentials.dto';
 // fazer a relação entre o repository e a entidade user
 
 @EntityRepository(User)

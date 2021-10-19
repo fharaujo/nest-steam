@@ -27,10 +27,10 @@ export class User extends BaseEntity {
   @Column({ nullable: true, type: 'varchar', length: 250 })
   image: string;
 
-  @Column({ nullable: false, select: false })
+  @Column({ nullable: false })
   password: string;
 
-  @Column({ nullable: false, select: false })
+  @Column({ nullable: false })
   salt: string;
 
   @Column({ nullable: true, type: 'varchar', length: 64, select: false })
