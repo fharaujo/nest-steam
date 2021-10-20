@@ -5,10 +5,12 @@ import {
   Column,
   ManyToOne,
   JoinTable,
+  Unique,
 } from 'typeorm';
 
 import { User } from '../users/user.entity';
 
+@Unique(['name'])
 @Entity()
 export class Game extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -17,7 +19,7 @@ export class Game extends BaseEntity {
   @Column({ nullable: false, type: 'varchar', length: 200 })
   name: string;
 
-  @Column({ nullable: false, type: 'varchar', length: 350 })
+  @Column({ nullable: true, type: 'varchar' })
   image: string;
 
   @Column({ nullable: true, type: 'varchar', length: 250 })

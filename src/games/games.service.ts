@@ -13,6 +13,6 @@ export class GamesService {
 
   async createGame(createGameDto: CreateGameDto): Promise<Game> {
     const game = await this.gameService.create(createGameDto);
-    return this.gameService.save(game);
+    return game;
   }
 }

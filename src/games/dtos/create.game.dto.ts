@@ -5,8 +5,7 @@ export class CreateGameDto {
   @MaxLength(200, { message: 'O nome deve ter menos de 200 caracteres' })
   name: string;
 
-  @IsNotEmpty({ message: 'Informe uma senha.' })
-  @MaxLength(8, { message: 'A senha deve ter no máximo 350 caracteres' })
+  @IsOptional({ message: 'Copie e cole uma URL de imagem.' })
   image: string;
 
   @IsNotEmpty({ message: 'Informe a biografia do jogo.' })
