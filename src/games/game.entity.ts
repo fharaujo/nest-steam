@@ -5,6 +5,7 @@ import {
   Column,
   ManyToOne,
   Unique,
+  JoinColumn,
 } from 'typeorm';
 
 import { User } from '../users/user.entity';
@@ -35,5 +36,6 @@ export class Game extends BaseEntity {
 
   // relationship entities
   @ManyToOne(() => User, (user) => user.games, { eager: true })
+  @JoinColumn({ name: 'user_id' })
   user: User;
 }
