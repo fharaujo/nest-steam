@@ -12,8 +12,12 @@ export class GamesService {
   ) {}
 
   // create game
-  async createGame(createGameDto: CreateGameDto): Promise<Game> {
-    const game = await this.gameService.create(createGameDto);
+  async createGameUserAdmin(createGameDto: CreateGameDto): Promise<Game> {
+    const game = await this.gameService.createGame(createGameDto);
     return game;
+  }
+
+  async getAllGames(): Promise<Game[]> {
+    return await this.gameService.find();
   }
 }

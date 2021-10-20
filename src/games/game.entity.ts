@@ -30,10 +30,10 @@ export class Game extends BaseEntity {
   @Column({ name: 'likes', default: 0 })
   likes: number;
 
-  // relationship entities
   @Column({ nullable: true, type: 'json' })
   categories: string[];
 
+  // relationship entities
   @ManyToOne(() => User, (user) => user.games, { eager: true })
   user: User;
 }
