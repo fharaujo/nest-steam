@@ -13,6 +13,7 @@ import { RolesGuard } from 'src/auth/auth-roles.guard';
 export class GamesController {
   constructor(private gameService: GameRepository) {}
 
+  // create game admin user
   @Post('create-game')
   @Role(UserRole.ADMIN)
   async createGame(

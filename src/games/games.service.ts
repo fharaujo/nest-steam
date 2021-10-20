@@ -11,6 +11,7 @@ export class GamesService {
     private gameService: GameRepository,
   ) {}
 
+  // create game
   async createGame(createGameDto: CreateGameDto): Promise<Game> {
     const game = await this.gameService.create(createGameDto);
     return game;

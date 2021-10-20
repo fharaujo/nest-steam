@@ -32,7 +32,7 @@ export class AuthService {
       UserCredentialsDto,
     );
 
-    if (!user == null) {
+    if (user == null) {
       throw new UnauthorizedException('Informações são inválidas');
     }
 
