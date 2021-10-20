@@ -11,13 +11,20 @@ export class GamesService {
     private gameService: GameRepository,
   ) {}
 
+  // get all games
+  async getAllGames(): Promise<Game[]> {
+    return await this.gameService.find();
+  }
+
   // create game
   async createGameUserAdmin(createGameDto: CreateGameDto): Promise<Game> {
     const game = await this.gameService.createGame(createGameDto);
     return game;
   }
 
-  async getAllGames(): Promise<Game[]> {
-    return await this.gameService.find();
+  // get by game name
+  async findByNameGame(name: string): Promise<Game> {
+    const nameGame = await this.gameService.findOne({ where: { name } });
+    return nameGame;
   }
 }
