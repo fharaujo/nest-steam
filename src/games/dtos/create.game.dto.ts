@@ -20,7 +20,7 @@ export class CreateGameDto {
   likes: number;
 
   @IsOptional()
-  user: User;
+  user: number;
 
   @IsOptional()
   categories: string[];

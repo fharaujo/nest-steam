@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 import { Game } from '../games/game.entity';
@@ -42,13 +43,15 @@ export class User extends BaseEntity {
   birthday: string;
 
   @Column({ nullable: false, default: true })
-  status: true;
+  status: boolean;
 
   @Column({ nullable: false, type: 'varchar', length: 20 })
   role: string;
 
   // relationship entities
-  @OneToMany(() => Game, (game) => game.user)
+  @OneToMany(() => Game, (game) => game.user, {
+    eager: true,
+  })
   games: Game[];
 
   @Column({ name: 'follow_count', default: 0 })

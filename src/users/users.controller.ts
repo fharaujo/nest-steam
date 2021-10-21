@@ -7,6 +7,7 @@ import {
   Param,
   NotFoundException,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -33,6 +34,13 @@ export class UsersController {
     };
   }
 
+  // get all users
+  @Get()
+  async getAll() {
+    return this.usersService.getAllUsers();
+  }
+
+  // get name user
   @Get(':username')
   async getUserByUsername(
     @Param('username') username: string,
@@ -47,8 +55,15 @@ export class UsersController {
     };
   }
 
-  @Get()
-  async getAll() {
-    return this.usersService.getAllUser();
+  // get by id user
+  @Get(':id')
+  async getByIdUser(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ReturnUserDto> {
+    const user = await this.usersService.findUserById(id);
+    return {
+      user,
+      message: 'Usuário encontrado.',
+    };
   }
 }

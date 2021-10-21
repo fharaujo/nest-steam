@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   NotFoundException,
+  Patch,
 } from '@nestjs/common';
 import { CreateGameDto } from './dtos/create.game.dto';
 import { ReturnGameDto } from './dtos/return-game.dto';
@@ -17,10 +18,14 @@ import { RolesGuard } from 'src/auth/auth-roles.guard';
 import { GamesService } from './games.service';
 import { GetUser } from 'src/auth/auth-decorator';
 import { User } from 'src/users/user.entity';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('game')
 export class GamesController {
-  constructor(private gameService: GamesService) {}
+  constructor(
+    private userService: UsersService,
+    private gameService: GamesService,
+  ) {}
 
   // get all games
   @Get()
@@ -49,15 +54,20 @@ export class GamesController {
   @Role(UserRole.ADMIN)
   async createGame(
     @Body(ValidationPipe) createGameDto: CreateGameDto,
-    @GetUser() user: User,
   ): Promise<ReturnGameDto> {
+    const userId = await this.userService.findUserById(createGameDto.user);
+
     const game = await this.gameService.createGameUserAdmin(
       createGameDto,
-      user,
+      userId,
     );
+    console.log(userId);
     return {
       game,
       message: 'Jogo criado com sucesso.',
     };
   }
+
+  @Patch(':name')
+  async addGame(@Param('name'),)
 }

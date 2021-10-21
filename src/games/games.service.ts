@@ -4,7 +4,6 @@ import { GameRepository } from './game.repository';
 import { CreateGameDto } from './dtos/create.game.dto';
 import { Game } from './game.entity';
 import { User } from 'src/users/user.entity';
-import { UserRepository } from 'src/users/users.repository';
 
 @Injectable()
 export class GamesService {
@@ -21,9 +20,9 @@ export class GamesService {
   // create game
   async createGameUserAdmin(
     createGameDto: CreateGameDto,
-    user: User,
+    userId: User,
   ): Promise<Game> {
-    const game = await this.gameService.createGame(createGameDto, user);
+    const game = await this.gameService.createGame(createGameDto, userId);
     return game;
   }
 

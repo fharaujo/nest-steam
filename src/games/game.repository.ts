@@ -10,7 +10,7 @@ import { Game } from './game.entity';
 @EntityRepository(Game)
 export class GameRepository extends Repository<Game> {
   // create gameRepository
-  async createGame(createGameDto: CreateGameDto, user: User): Promise<Game> {
+  async createGame(createGameDto: CreateGameDto, userId: User): Promise<Game> {
     const { name, image, bio, releaseDate, likes, categories } = createGameDto;
 
     const game = this.create();
@@ -21,7 +21,7 @@ export class GameRepository extends Repository<Game> {
     game.releaseDate = releaseDate;
     game.likes = likes;
     game.categories = categories;
-    game.author = [user.username, user.role];
+    game.user = userId;
 
     try {
       await game.save();

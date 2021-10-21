@@ -33,9 +33,6 @@ export class Game extends BaseEntity {
   @Column({ nullable: true, type: 'json' })
   categories: string[];
 
-  @Column({ nullable: true, type: 'json' })
-  author: string[];
-
   // relationship entities
   @ManyToOne(() => User, (user) => user.games)
   user: User;

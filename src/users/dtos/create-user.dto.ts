@@ -8,6 +8,9 @@ import {
 import { Game } from 'src/games/game.entity';
 
 export class CreateUserDto {
+  @IsOptional()
+  id: number;
+
   @IsNotEmpty({
     message: 'Informe um endereço de e-mail.',
   })
