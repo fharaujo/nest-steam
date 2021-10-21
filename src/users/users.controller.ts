@@ -39,7 +39,7 @@ export class UsersController {
   ): Promise<ReturnUserDto> {
     const user = await this.usersService.getUserByUsername(username);
     if (!user) {
-      throw new NotFoundException('User não encontrado');
+      throw new NotFoundException('Usuário não encontrado');
     }
     return {
       user,

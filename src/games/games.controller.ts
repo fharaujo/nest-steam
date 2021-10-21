@@ -15,6 +15,8 @@ import { Role } from 'src/auth/auth-role.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/auth/auth-roles.guard';
 import { GamesService } from './games.service';
+import { GetUser } from 'src/auth/auth-decorator';
+import { User } from 'src/users/user.entity';
 
 @Controller('game')
 export class GamesController {
@@ -43,12 +45,16 @@ export class GamesController {
 
   // create game admin user
   @Post('create-game')
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(AuthGuard(), RolesGuard)
   @Role(UserRole.ADMIN)
   async createGame(
     @Body(ValidationPipe) createGameDto: CreateGameDto,
+    @GetUser() user: User,
   ): Promise<ReturnGameDto> {
-    const game = await this.gameService.createGameUserAdmin(createGameDto);
+    const game = await this.gameService.createGameUserAdmin(
+      createGameDto,
+      user,
+    );
     return {
       game,
       message: 'Jogo criado com sucesso.',

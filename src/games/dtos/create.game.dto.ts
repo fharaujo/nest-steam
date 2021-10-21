@@ -1,10 +1,5 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
+import { User } from 'src/users/user.entity';
 
 export class CreateGameDto {
   @IsNotEmpty({ message: 'Informe o nome de usuário.' })
@@ -18,13 +13,18 @@ export class CreateGameDto {
   bio: string;
 
   @IsNotEmpty({ message: 'Informe a data de lançamento.' })
-  release_date: string;
+  releaseDate: string;
 
   @IsNumber()
   @IsNotEmpty({ message: 'O default de likes é zero(0).' })
   likes: number;
 
   @IsOptional()
-  @IsString()
+  user: User;
+
+  @IsOptional()
   categories: string[];
+
+  @IsOptional()
+  author: string[];
 }

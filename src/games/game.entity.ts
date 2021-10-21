@@ -5,7 +5,6 @@ import {
   Column,
   ManyToOne,
   Unique,
-  JoinColumn,
 } from 'typeorm';
 
 import { User } from '../users/user.entity';
@@ -26,7 +25,7 @@ export class Game extends BaseEntity {
   bio: string;
 
   @Column({ nullable: true, type: 'varchar', length: 250 })
-  release_date: string;
+  releaseDate: string;
 
   @Column({ name: 'likes', default: 0 })
   likes: number;
@@ -34,8 +33,10 @@ export class Game extends BaseEntity {
   @Column({ nullable: true, type: 'json' })
   categories: string[];
 
+  @Column({ nullable: true, type: 'json' })
+  author: string[];
+
   // relationship entities
-  @ManyToOne(() => User, (user) => user.games, { eager: true })
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, (user) => user.games)
   user: User;
 }

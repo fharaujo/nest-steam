@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GameRepository } from './game.repository';
 import { CreateGameDto } from './dtos/create.game.dto';
 import { Game } from './game.entity';
+import { User } from 'src/users/user.entity';
+import { UserRepository } from 'src/users/users.repository';
 
 @Injectable()
 export class GamesService {
@@ -17,8 +19,11 @@ export class GamesService {
   }
 
   // create game
-  async createGameUserAdmin(createGameDto: CreateGameDto): Promise<Game> {
-    const game = await this.gameService.createGame(createGameDto);
+  async createGameUserAdmin(
+    createGameDto: CreateGameDto,
+    user: User,
+  ): Promise<Game> {
+    const game = await this.gameService.createGame(createGameDto, user);
     return game;
   }
 

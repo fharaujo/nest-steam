@@ -1,4 +1,11 @@
-import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { Game } from 'src/games/game.entity';
 
 export class CreateUserDto {
   @IsNotEmpty({
@@ -20,4 +27,7 @@ export class CreateUserDto {
     message: 'A Confirmação de senha deve deve ser igual a senha.',
   })
   passwordConfirmation: string;
+
+  @IsOptional()
+  games: Game[];
 }
