@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsNumber, IsOptional, MaxLength } from 'class-validator';
+import { IsOptional, IsNotEmpty, IsNumber, MaxLength } from 'class-validator';
 
-export class CreateGameDto {
+export class UpdateGameDto {
   @IsOptional()
   id: string;
 

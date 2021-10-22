@@ -10,12 +10,14 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from 'src/users/user.entity';
 import { UserRole } from './user-roles.enum';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { GameRepository } from 'src/games/game.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserRepository)
     private userService: UserRepository,
+    private gameRepository: GameRepository,
   ) {}
 
   // create user admin
@@ -30,9 +32,9 @@ export class UsersService {
   // update user
   async updateUser(updateUserDto: UpdateUserDto, id: number): Promise<User> {
     const user = await this.findUserById(id);
-    const { name, email, role, status } = updateUserDto;
+    const { username, email, role, status } = updateUserDto;
 
-    user.username = name ? name : user.username;
+    user.username = username ? username : user.username;
     user.email = email ? email : user.email;
     user.role = role ? role : user.role;
     user.status = status === undefined ? user.status : status;
@@ -47,6 +49,11 @@ export class UsersService {
     }
   }
 
+  // get all users
+  async getAllUsers(): Promise<User[]> {
+    return await this.userService.find();
+  }
+
   // get by id user
   async findUserById(userId: number): Promise<User> {
     const user = await this.userService.findOne(userId, {
@@ -59,11 +66,6 @@ export class UsersService {
     return user;
   }
 
-  // get all users
-  async getAllUsers(): Promise<User[]> {
-    return await this.userService.find();
-  }
-
   // get by name user
   async getUserByUsername(username: string): Promise<User> {
     const userExist = await this.userService.findOne({ where: { username } });
@@ -73,5 +75,30 @@ export class UsersService {
     }
 
     return userExist;
+  }
+
+  async addGameUser(
+    userUpate: UpdateUserDto,
+    id: number,
+    userMe: string,
+  ): Promise<User> {
+    const user = await this.userService.findOne(userMe);
+    const { username, email, role, status } = userUpate;
+    const idGame = await this.gameRepository.findOne({ where: { id: id } });
+
+    user.username = username ? username : user.username;
+    user.email = email ? email : user.email;
+    user.role = role ? role : user.role;
+    user.status = status === undefined ? user.status : status;
+    user.gameFollow = [idGame.name];
+
+    try {
+      await user.save();
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Erro ao salvar no banco de dados',
+      );
+    }
+    return user;
   }
 }

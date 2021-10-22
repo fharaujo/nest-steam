@@ -6,7 +6,7 @@ export class UpdateUserDto {
   @IsString({
     message: 'Informe um nome de usuário válido',
   })
-  name: string;
+  username: string;
 
   @IsOptional()
   @IsEmail(

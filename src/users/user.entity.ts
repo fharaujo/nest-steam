@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  JoinColumn,
 } from 'typeorm';
 
 import { Game } from '../games/game.entity';
@@ -60,6 +59,9 @@ export class User extends BaseEntity {
   @Column({ name: 'following_count', default: 0 })
   followingCount: number;
 
+  @Column('simple-array', { nullable: true })
+  gameFollow: string[];
+
   // date
   @CreateDateColumn()
   createAt: Date;
@@ -72,17 +74,3 @@ export class User extends BaseEntity {
     return hash === this.password;
   }
 }
-
-/*
-+id
-+nome
-+email
-+imagem
-+bio
-+nascimento
-+seguidores[]
-+seguindo[]
-+criado_em
-+modificado_em
-+jogos_que_segue[]
-+éAdmin*/
